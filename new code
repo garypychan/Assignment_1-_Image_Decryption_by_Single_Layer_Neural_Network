@@ -1,0 +1,10 @@
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import numpy as np
+K1 = mpimg.imread('C:\\Users\\user\\Desktop\\key1.png',0)
+K2 = mpimg.imread('C:\\Users\\user\\Desktop\\key2.png',0)
+I = mpimg.imread('C:\\Users\\user\\Desktop\\I.png',0)
+E = mpimg.imread('C:\\Users\\user\\Desktop\\E.png')
+Eprime= mpimg.imread('C:\\Users\\user\\Desktop\\Eprime.png')
+w = [1,1,1];  
+[W,H]=[400,300]
