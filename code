@@ -1,0 +1,12 @@
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import numpy as np
+f = open('C:\\Users\\user\\Desktop\\k1.txt', 'r')
+data = f.read()
+k1=data
+print('k1',k1)
+q = open('C:\\Users\\user\\Desktop\\k2.txt', 'r')
+k2 = q.read()
+K1 = mpimg.imread('C:\\Users\\user\\Desktop\\key1.png',0)
+plt.imshow(K1)
+K2 = mpimg.imread('C:\\Users\\user\\Desktop\\key2.png')
