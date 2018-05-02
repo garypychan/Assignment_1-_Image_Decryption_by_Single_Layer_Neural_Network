@@ -29,14 +29,11 @@ e=np.zeros([300,400])
 e[i,j]=E[i,j]-a[i,j]
 re=[[r*e[i,j]],[r*e[i,j]],[r*e[i,j]]]
 rek=np.multiply(re,pt)
-wepoch2=wepoch1+rek
-wepoch1=[1,1,1]
-wepoch2=[1,1,1]
+wepoch=[1,1,1]
 while epoch <2 :
     for i in range(20):
         
         for j in range(20):
-            wepoch1=wepoch2
             p=[K1[i,j],K2[i,j],Iamge[i,j]]           #找出圖片的點像素   
             pt=[[K1[i,j]],[K2[i,j]],[Iamge[i,j]]]    #找出x(k)
                 
@@ -47,8 +44,8 @@ while epoch <2 :
             e[i,j]=E[i,j]-a[i,j]                    #算出e
             re=[[r*e[i,j]],[r*e[i,j]],[r*e[i,j]]]   #算 0.00001*e
             rek=np.multiply(re,pt)                  #算 0.00001*e*x
-            wepoch2=wepoch1+np.ravel(rek)                     #w epoch (k) = w epoch (k-1)+ 0.00001*e*x
-            print(wepoch2)
+            wepoch=wepoch+np.ravel(rek)                     #w epoch (k) = w epoch (k-1)+ 0.00001*e*x
+            print(wepoch)
     
     epoch=epoch+1
 for i in range (0,300,1):
