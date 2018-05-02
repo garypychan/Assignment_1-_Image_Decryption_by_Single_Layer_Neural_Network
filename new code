@@ -1,57 +1,26 @@
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import numpy as np
-K1 = mpimg.imread('C:\\Users\\user\\Desktop\\key1.png',0)
-K2 = mpimg.imread('C:\\Users\\user\\Desktop\\key2.png',0)
+k1 = mpimg.imread('C:\\Users\\user\\Desktop\\key1.png',0)
+k2 = mpimg.imread('C:\\Users\\user\\Desktop\\key2.png',0)
 Iamge = mpimg.imread('C:\\Users\\user\\Desktop\\I.png',0)
 E = mpimg.imread('C:\\Users\\user\\Desktop\\E.png',0)
 Eprime= mpimg.imread('C:\\Users\\user\\Desktop\\Eprime.png',0)  
-[W,H]=[300,400]
-epoch = 1
-a = np.zeros([300,400]);
-I = np.zeros([300,400]);
-r = 0.00001;
-i=0
-j=0
-Iamge[i,j]
-p=[K1[i,j],K2[i,j],Iamge[i,j]]
-pt=[[K1[i,j]],[K2[i,j]],[Iamge[i,j]]]
-w1 = np.random.random([300,400])
-w2 = np.random.random([300,400])
-w3 = np.random.random([300,400])
-w2 = np.random.random([300,400])
-w = np.zeros([3,1])
-w=[w1[i,j],w2[i,j],w3[i,j]]
-wt=[[w1[i,j]],[w2[i,j]],[w3[i,j]]]
-a=np.zeros([300,400])
-a[i,j]=np.dot(w,pt)
-e=np.zeros([300,400])
-e[i,j]=E[i,j]-a[i,j]
-re=[[r*e[i,j]],[r*e[i,j]],[r*e[i,j]]]
-rek=np.multiply(re,pt)
-wepoch=[1,1,1]
-while epoch <2 :
-    for i in range(20):
+m,n=np.shape(k1)
+w=np.array([1,1,1])
+print(w.shape)
+for k in range(20):
+    for i in range(m):
+        for j in range(n):
+            pt=np.array([[k1[i,j]],[k2[i,j]],[Iamge[i,j]]])
+            a=np.dot(w,pt)
+            e=E[i,j]-a
+            w=w + 0.00001*e*pt.T   
+NE=np.zeros([m,n])
+for i in range (m):
+    for j in range(n):
+        NE[i,j]= (Eprime[i,j]-w[0,0]*k1[i,j]-w[0,1]*k2[i,j])/w[0,2]
         
-        for j in range(20):
-            p=[K1[i,j],K2[i,j],Iamge[i,j]]           #找出圖片的點像素   
-            pt=[[K1[i,j]],[K2[i,j]],[Iamge[i,j]]]    #找出x(k)
-                
-            w=[w1[i,j],w2[i,j],w3[i,j]]
-            wt=[[w1[i,j]],[w2[i,j]],[w3[i,j]]]                          #找出wt 與 w
-                
-            a[i,j]=np.dot(w,pt)                     #算出a
-            e[i,j]=E[i,j]-a[i,j]                    #算出e
-            re=[[r*e[i,j]],[r*e[i,j]],[r*e[i,j]]]   #算 0.00001*e
-            rek=np.multiply(re,pt)                  #算 0.00001*e*x
-            wepoch=wepoch+np.ravel(rek)                     #w epoch (k) = w epoch (k-1)+ 0.00001*e*x
-            print(wepoch)
-    
-    epoch=epoch+1
-for i in range (0,300,1):
-    for j in range(0,400,1):
-        I[i,j]=(Eprime[i,j]-wepoch2[0,]*K1[i,j]-wepoch2[1,]*K2[i,j])/wepoch2[2,]
-        
-plt.imshow(I, cmap='Greys_r')
+plt.imshow(NE, cmap='Greys_r')
 plt.axis('off')
 plt.show()
