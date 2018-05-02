@@ -3,81 +3,58 @@ import matplotlib.image as mpimg
 import numpy as np
 K1 = mpimg.imread('C:\\Users\\user\\Desktop\\key1.png',0)
 K2 = mpimg.imread('C:\\Users\\user\\Desktop\\key2.png',0)
-II = mpimg.imread('C:\\Users\\user\\Desktop\\I.png',0)
+Iamge = mpimg.imread('C:\\Users\\user\\Desktop\\I.png',0)
 E = mpimg.imread('C:\\Users\\user\\Desktop\\E.png',0)
 Eprime= mpimg.imread('C:\\Users\\user\\Desktop\\Eprime.png',0)  
-K2.shape
 [W,H]=[300,400]
 epoch = 1
 a = np.zeros([300,400]);
-e = np.zeros(0);
 I = np.zeros([300,400]);
 r = 0.00001;
 i=0
 j=0
-
-KK1=np.zeros([300,400]);                    # 設定 p[i]=[K1[i,j],K2[i,j],K3[i,j]]
-KK2=np.zeros([300,400]);                    # p的轉置矩陣pt=[[K1],[K2],[II]]
-II=np.zeros([300,400]);
-KK1=K1[i,j]
-KK2=K2[i,j]
-III=II[i,j]
-
-p=[KK1,KK2,III]
-pt=[[KK1],
-   [KK2],
-   [III]
-    ]
-w1 = np.random.random([300,400])          # 設w[i,j]=[w1[i,j],w2[i,j],w3[i,j]]
-w2 = np.random.random([300,400])          # w的轉置矩陣=wt =[ [w1] ,[w2], [w3]] 
+Iamge[i,j]
+p=[K1[i,j],K2[i,j],Iamge[i,j]]
+pt=[[K1[i,j]],[K2[i,j]],[Iamge[i,j]]]
+w1 = np.random.random([300,400])
+w2 = np.random.random([300,400])
 w3 = np.random.random([300,400])
 w2 = np.random.random([300,400])
-w = np.zeros([300,400])
-ww1=w1[i,j]
-ww2=w2[i,j]
-ww3=w3[i,j]
-w=[ww1,ww2,ww3]
-wt=[[ww1],
-   [ww2],
-   [ww3]]
-   a=np.zeros([300,400])
-a[i,j]=np.dot(w,pt)                        # a[i,j]= w x pt     
-
-e=np.zeros([300,400])                     
-e[i,j]=E[i,j]-a[i,j]                       # e[i,j]=E[i,j]-a[i,j]  
-re=[[r*e[i,j]],[r*e[i,j]],[r*e[i,j]]]      # re = 0.00001 * e 
-rek=np.multiply(re,pt)                     # rek= re x pt
-wepoch1=np.zeros([3,1])
-wepoch2=np.zeros([3,1])
+w = np.zeros([3,1])
+w=[w1[i,j],w2[i,j],w3[i,j]]
+wt=[[w1[i,j]],[w2[i,j]],[w3[i,j]]]
+a=np.zeros([300,400])
+a[i,j]=np.dot(w,pt)
+e=np.zeros([300,400])
+e[i,j]=E[i,j]-a[i,j]
+re=[[r*e[i,j]],[r*e[i,j]],[r*e[i,j]]]
+rek=np.multiply(re,pt)
 wepoch2=wepoch1+rek
-while epoch <1000 :
-    for i in range(0,300,1):
+wepoch1=[1,1,1]
+wepoch2=[1,1,1]
+while epoch <2 :
+    for i in range(20):
         
-        for j in range(0,400):
+        for j in range(20):
             wepoch1=wepoch2
-            KK1=K1[i,j]                             #找出圖片的點像素
-            KK2=K2[i,j]
-            III=II[i,j]
-            p=[KK1,KK2,III]
+            p=[K1[i,j],K2[i,j],Iamge[i,j]]           #找出圖片的點像素   
+            pt=[[K1[i,j]],[K2[i,j]],[Iamge[i,j]]]    #找出x(k)
                 
-            pt=[[KK1],[KK2],[III],]                 #找出x(k)
-                
-            ww1=w1[i,j]                             #找出wt 與 w
-            ww2=w2[i,j]
-            ww3=w3[i,j]
-            w=[ww1,ww2,ww3]
-            wt=[[ww1],[ww2],[ww3]]
+            w=[w1[i,j],w2[i,j],w3[i,j]]
+            wt=[[w1[i,j]],[w2[i,j]],[w3[i,j]]]                          #找出wt 與 w
                 
             a[i,j]=np.dot(w,pt)                     #算出a
             e[i,j]=E[i,j]-a[i,j]                    #算出e
             re=[[r*e[i,j]],[r*e[i,j]],[r*e[i,j]]]   #算 0.00001*e
             rek=np.multiply(re,pt)                  #算 0.00001*e*x
-            wepoch2=wepoch1+rek                     #w epoch (k) = w epoch (k-1)+ 0.00001*e*x
+            wepoch2=wepoch1+np.ravel(rek)                     #w epoch (k) = w epoch (k-1)+ 0.00001*e*x
+            print(wepoch2)
     
     epoch=epoch+1
-    
-for i in range (0,300,1):                                                 
+for i in range (0,300,1):
     for j in range(0,400,1):
-        I[i,j]=(Eprime[i,j]-wepoch2[0,0]*K1[i,j]-wepoch2[1,0]*K2[i,j])/3      # 解讀
-plt.imshow(I)                                                                  # 無法讀到要的???
-  
+        I[i,j]=(Eprime[i,j]-wepoch2[0,]*K1[i,j]-wepoch2[1,]*K2[i,j])/wepoch2[2,]
+        
+plt.imshow(I, cmap='Greys_r')
+plt.axis('off')
+plt.show()
